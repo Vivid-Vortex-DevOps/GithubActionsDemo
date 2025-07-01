@@ -2,6 +2,16 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.3'
 	id 'io.spring.dependency-management' version '1.1.7'
+	
+	// Code Quality Plugins
+	id 'com.diffplug.spotless' version '6.25.0'
+	id 'checkstyle' version '10.12.5'
+	id 'pmd' version '7.0.0'
+	id 'com.github.spotbugs' version '6.0.4'
+	id 'info.solidsoft.pitest' version '1.15.0'
+	id 'org.owasp.dependencycheck' version '8.4.3'
+	id 'jacoco' version '0.8.11'
+	id 'com.github.ben-manes.versions' version '0.50.0'
 }
 
 group = 'com.demo.actions'
@@ -19,14 +29,127 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springdoc:springdoc-openapi-ui:2.3.0'
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+	
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.boot:spring-boot-testcontainers'
 	testImplementation 'org.testcontainers:junit-jupiter'
+	testImplementation 'org.testcontainers:postgresql'
+	testImplementation 'com.tngtech.archunit:archunit:1.2.1'
+	testImplementation 'org.assertj:assertj-core:3.25.3'
+	testImplementation 'org.everit-json:org.everit.json.schema:1.14.4'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// Spotless Configuration
+spotless {
+	java {
+		googleJavaFormat('1.19.2')
+		removeUnusedImports()
+		trimTrailingWhitespace()
+		endWithNewline()
+	}
+}
+
+// Checkstyle Configuration
+checkstyle {
+	toolVersion = '10.12.5'
+	configFile = file('config/checkstyle/checkstyle.xml')
+	maxWarnings = 0
+}
+
+// PMD Configuration
+pmd {
+	toolVersion = '7.0.0'
+	consoleOutput = true
+	rulesMinimumPriority = 5
+	ruleSetFiles = files('config/pmd/ruleset.xml')
+}
+
+// SpotBugs Configuration
+spotbugs {
+	toolVersion = '4.8.3'
+	effort = 'max'
+	reportLevel = 'medium'
+	excludeFilter = file('config/spotbugs/exclude.xml')
+}
+
+spotbugsMain {
+	reports {
+		html {
+			required = true
+			outputLocation = file("$buildDir/reports/spotbugs/main/spotbugs.html")
+			stylesheet = 'fancy-hist.xsl'
+		}
+	}
+}
+
+// PIT Configuration
+pitest {
+	junit5PluginVersion = '1.2.1'
+	targetClasses = ['com.demo.actions.GithubActionsDemo.*']
+	outputFormats = ['HTML', 'XML']
+	mutationThreshold = 80
+	coverageThreshold = 80
+}
+
+// OWASP Dependency Check Configuration
+dependencyCheck {
+	formats = ['HTML', 'JSON']
+	suppressionFile = file('config/dependency-check/suppressions.xml')
+	failBuildOnCVSS = 7
+}
+
+// JaCoCo Configuration
+jacoco {
+	toolVersion = '0.8.11'
+}
+
+jacocoTestReport {
+	reports {
+		xml.required = true
+		html.required = true
+	}
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				counter = 'LINE'
+				value = 'COVEREDRATIO'
+				minimum = 0.8
+			}
+		}
+		rule {
+			limit {
+				counter = 'BRANCH'
+				value = 'COVEREDRATIO'
+				minimum = 0.7
+			}
+		}
+	}
+}
+
+// Gradle Versions Plugin Configuration
+dependencyUpdates {
+	checkForGradleUpdate = true
+	outputFormatter = 'json'
+	outputDir = 'build/reports/dependencyUpdates'
+	reportfileName = 'report'
+}
+
+// Task dependencies
+test.finalizedBy jacocoTestReport
+test.finalizedBy jacocoTestCoverageVerification
+check.dependsOn spotbugsMain
+check.dependsOn dependencyCheckAnalyze

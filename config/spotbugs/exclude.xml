@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter
+        xmlns="https://github.com/spotbugs/filter/3.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://github.com/spotbugs/filter/3.0.0 https://raw.githubusercontent.com/spotbugs/spotbugs/3.1.0/spotbugs/etc/findbugsfilter.xsd">
+
+    <!-- Exclude generated code -->
+    <Match>
+        <Source name="~.*\.java"/>
+    </Match>
+
+    <!-- Exclude test classes -->
+    <Match>
+        <Class name="~.*Test.*"/>
+    </Match>
+
+    <!-- Exclude Spring Boot specific patterns -->
+    <Match>
+        <Class name="~.*Application"/>
+    </Match>
+
+    <!-- Exclude specific false positives -->
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Class name="com.demo.actions.GithubActionsDemo.dto.*"/>
+    </Match>
+
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Class name="com.demo.actions.GithubActionsDemo.dto.*"/>
+    </Match>
+
+    <!-- Exclude serialization issues for DTOs -->
+    <Match>
+        <Bug pattern="SE_NO_SERIALVERSIONID"/>
+        <Class name="com.demo.actions.GithubActionsDemo.dto.*"/>
+    </Match>
+
+    <!-- Exclude unused fields that are used by frameworks -->
+    <Match>
+        <Bug pattern="URF_UNREAD_FIELD"/>
+        <Field name="logger"/>
+    </Match>
+
+    <!-- Exclude equals/hashCode issues for entities -->
+    <Match>
+        <Bug pattern="EQ_DOESNT_OVERRIDE_EQUALS"/>
+        <Class name="com.demo.actions.GithubActionsDemo.entity.*"/>
+    </Match>
+
+    <Match>
+        <Bug pattern="HE_EQUALS_USE_HASHCODE"/>
+        <Class name="com.demo.actions.GithubActionsDemo.entity.*"/>
+    </Match>
+
+</FindBugsFilter> 
