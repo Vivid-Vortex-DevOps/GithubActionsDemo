@@ -14,99 +14,33 @@ This project demonstrates a Spring Boot application with a comprehensive set of 
 
 ## 🛠️ Code Quality Tools Implemented
 
-### 1. **Spotless** - Code Formatting
-- **Purpose**: Ensures consistent code formatting across the project
-- **Configuration**: Uses Google Java Format
-- **Usage**: 
-  ```bash
-  ./gradlew spotlessApply    # Format code
-  ./gradlew spotlessCheck    # Check formatting
-  ```
+This project implements a comprehensive set of code quality and testing tools. For detailed information about each tool, configuration, and usage, please refer to:
 
-### 2. **Checkstyle** - Coding Standards
-- **Purpose**: Enforces Java coding standards and conventions
-- **Configuration**: `config/checkstyle/checkstyle.xml`
-- **Usage**:
-  ```bash
-  ./gradlew checkstyleMain checkstyleTest
-  ```
+### 📋 **Detailed Documentation**
+- **[Code Quality Tools Guide](checks.md)** - Complete list of all implemented tools with descriptions and configurations
+- **[GitHub Actions Implementation](githubActionsChecks.md)** - CI/CD pipeline setup and GitHub Actions workflows
 
-### 3. **PMD** - Static Code Analysis
-- **Purpose**: Detects code issues like empty catch blocks, hardcoded literals
-- **Configuration**: `config/pmd/ruleset.xml`
-- **Usage**:
-  ```bash
-  ./gradlew pmdMain pmdTest
-  ```
+### 🚀 **Quick Start Commands**
 
-### 4. **SpotBugs** - Bug Detection
-- **Purpose**: Analyzes bytecode to detect potential bugs
-- **Configuration**: `config/spotbugs/exclude.xml`
-- **Usage**:
-  ```bash
-  ./gradlew spotbugsMain spotbugsTest
-  ```
+```bash
+# Run all quality checks at once
+./run-quality-checks.sh          # Linux/Mac
+run-quality-checks.bat           # Windows
 
-### 5. **PIT (Pitest)** - Mutation Testing
-- **Purpose**: Tests the quality of unit tests by making code changes
-- **Configuration**: Set in `build.gradle`
-- **Usage**:
-  ```bash
-  ./gradlew pitest
-  ```
+# Individual tool commands
+./gradlew spotlessCheck          # Code formatting
+./gradlew checkstyleMain         # Coding standards
+./gradlew pmdMain               # Static analysis
+./gradlew spotbugsMain          # Bug detection
+./gradlew test                  # All tests with coverage
+./gradlew pitest                # Mutation testing
+./gradlew dependencyCheckAnalyze # Security scan
+./gradlew dependencyUpdates     # Check for updates
+```
 
-### 6. **OWASP Dependency Check** - Security Vulnerabilities
-- **Purpose**: Scans dependencies for known security vulnerabilities
-- **Configuration**: `config/dependency-check/suppressions.xml`
-- **Usage**:
-  ```bash
-  ./gradlew dependencyCheckAnalyze
-  ```
-
-### 7. **JaCoCo** - Code Coverage
-- **Purpose**: Measures test coverage with thresholds
-- **Configuration**: Set in `build.gradle`
-- **Usage**:
-  ```bash
-  ./gradlew test jacocoTestReport
-  ```
-
-### 8. **ArchUnit** - Architecture Testing
-- **Purpose**: Enforces architectural rules and layering
-- **Usage**: Run with tests
-- **Examples**: See `src/test/java/.../architecture/ArchitectureTest.java`
-
-### 9. **AssertJ** - Fluent Assertions
-- **Purpose**: Provides readable and expressive test assertions
-- **Usage**: Used in all test classes
-
-### 10. **Testcontainers** - Integration Testing
-- **Purpose**: Run containerized databases during tests
-- **Usage**: See `src/test/java/.../integration/UserIntegrationTest.java`
-
-### 11. **Gradle Versions Plugin** - Dependency Updates
-- **Purpose**: Detects outdated dependencies
-- **Usage**:
-  ```bash
-  ./gradlew dependencyUpdates
-  ```
-
-### 12. **Springdoc OpenAPI** - API Documentation
-- **Purpose**: Generates OpenAPI 3 documentation
-- **Access**: `http://localhost:8080/swagger-ui.html`
-
-### 13. **JSON Schema Validation** - API Contract Testing
-- **Purpose**: Validates JSON payloads against schemas
-- **Usage**: See `src/test/java/.../validation/JsonSchemaValidationTest.java`
-
-### 14. **SonarCloud** - Code Quality Analysis
-- **Purpose**: Cloud-based code quality analysis with dashboards and quality gates
-- **Access**: [SonarCloud Dashboard](https://sonarcloud.io/summary/overall?id=Vivid-Vortex-DevOps_GithubActionsDemo&branch=master)
-- **Features**: 
-  - Real-time code analysis
-  - Quality gates and metrics
-  - Pull request decoration
-  - Multi-language support (Java, JavaScript, TypeScript, C#, Python, etc.)
+### 🔗 **External Tools**
+- **[SonarCloud Dashboard](https://sonarcloud.io/summary/overall?id=Vivid-Vortex-DevOps_GithubActionsDemo&branch=master)** - Cloud-based code quality analysis
+- **Swagger UI**: `http://localhost:8080/swagger-ui.html` - API documentation
 
 ## 🏗️ Project Structure
 
@@ -152,36 +86,20 @@ src/
    - Swagger UI: `http://localhost:8080/swagger-ui.html`
    - API Endpoints: `http://localhost:8080/api/users`
 
-### Running Tests
+### Running Tests & Quality Checks
+
+For comprehensive testing and quality check commands, see the **[Code Quality Tools Guide](checks.md)**.
 
 ```bash
-# Run all tests
-./gradlew test
+# Quick start - run all quality checks
+./run-quality-checks.sh          # Linux/Mac
+run-quality-checks.bat           # Windows
 
-# Run specific test types
-./gradlew test --tests "*ControllerTest"
-./gradlew test --tests "*ServiceTest"
-./gradlew test --tests "*IntegrationTest"
-
-# Run with coverage
-./gradlew test jacocoTestReport
-
-# Run mutation testing
-./gradlew pitest
-```
-
-### Code Quality Checks
-
-```bash
-# Run all quality checks
-./gradlew check
-
-# Individual checks
-./gradlew spotlessCheck
-./gradlew checkstyleMain checkstyleTest
-./gradlew pmdMain pmdTest
-./gradlew spotbugsMain spotbugsTest
-./gradlew dependencyCheckAnalyze
+# Common commands
+./gradlew test                   # Run all tests with coverage
+./gradlew test --tests "*ControllerTest"  # Run specific test types
+./gradlew pitest                 # Run mutation testing
+./gradlew check                  # Run all quality checks
 ```
 
 ### Building and Running with Docker
@@ -199,27 +117,17 @@ docker run -p 8080:8080 github-actions-demo
 
 ## 🔄 CI/CD Pipeline
 
-The project includes a comprehensive GitHub Actions workflow (`.github/workflows/ci-cd.yml`) that:
+The project includes a comprehensive GitHub Actions workflow that automates all quality checks and deployment processes.
 
-1. **Code Quality Checks**:
-   - Spotless formatting check
-   - Checkstyle validation
-   - PMD static analysis
-   - SpotBugs bug detection
+### 📋 **Pipeline Documentation**
+- **[GitHub Actions Implementation Guide](githubActionsChecks.md)** - Detailed CI/CD setup and workflow configuration
+- **Workflow File**: `.github/workflows/ci-cd.yml`
 
-2. **Security Checks**:
-   - OWASP dependency vulnerability scan
-   - Secret detection with TruffleHog
-
-3. **Testing**:
-   - Unit and integration tests
-   - PIT mutation testing
-   - JaCoCo coverage reporting
-
-4. **Build and Deploy**:
-   - Application build
-   - Docker image creation
-   - Deployment to staging/production
+### 🚀 **Pipeline Stages**
+1. **Code Quality Checks** - Spotless, Checkstyle, PMD, SpotBugs
+2. **Security Scans** - OWASP dependency check, secrets detection
+3. **Testing** - Unit tests, integration tests, mutation testing, coverage
+4. **Build & Deploy** - Application build, Docker image, deployment
 
 ## 📊 API Endpoints
 
@@ -259,10 +167,7 @@ curl http://localhost:8080/api/users/1
 - `src/test/resources/application-test.properties` - Test configuration
 
 ### Tool Configurations
-- `config/checkstyle/checkstyle.xml` - Checkstyle rules
-- `config/pmd/ruleset.xml` - PMD rules
-- `config/spotbugs/exclude.xml` - SpotBugs exclusions
-- `config/dependency-check/suppressions.xml` - OWASP suppressions
+All tool configurations are located in the `config/` directory. For detailed configuration information, see the **[Code Quality Tools Guide](checks.md)**.
 
 ## 📈 Quality Metrics
 
