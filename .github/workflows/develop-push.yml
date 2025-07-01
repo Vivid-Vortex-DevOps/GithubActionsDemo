@@ -1,0 +1,17 @@
+name: Develop Branch Pipeline
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  # Call the common tasks workflow for develop branch
+  common-checks:
+    uses: ./.github/workflows/common-tasks.yml
+    with:
+      run-sonarcloud: false  # Don't run SonarCloud on develop
+      run-docker: true       # Build and push Docker image
+      run-performance: false # Don't run performance tests on develop
+      run-deploy: true       # Deploy to staging
+      deploy-environment: 'staging'
+    secrets: inherit 

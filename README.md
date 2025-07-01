@@ -121,7 +121,8 @@ The project includes a comprehensive GitHub Actions workflow that automates all 
 
 ### 📋 **Pipeline Documentation**
 - **[GitHub Actions Implementation Guide](githubActionsChecks.md)** - Detailed CI/CD setup and workflow configuration
-- **Workflow File**: `.github/workflows/ci-cd.yml`
+- **Main Workflow**: `.github/workflows/ci-cd.yml` - Complete CI/CD pipeline
+- **Quality Workflow**: `.github/workflows/quality.yml` - Dedicated quality checks
 
 ### 🚀 **Pipeline Stages**
 1. **Code Quality Checks** - Spotless, Checkstyle, PMD, SpotBugs

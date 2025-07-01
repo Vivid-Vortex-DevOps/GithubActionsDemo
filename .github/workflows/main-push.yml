@@ -1,0 +1,17 @@
+name: Main Branch Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  # Call the common tasks workflow for main branch
+  common-checks:
+    uses: ./.github/workflows/common-tasks.yml
+    with:
+      run-sonarcloud: true   # Run SonarCloud analysis
+      run-docker: true       # Build and push Docker image
+      run-performance: true  # Run performance tests
+      run-deploy: true       # Deploy to production
+      deploy-environment: 'production'
+    secrets: inherit 

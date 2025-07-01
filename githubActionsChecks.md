@@ -218,4 +218,54 @@ jobs:
 
 ---
 
+## 🔐 **GitHub Secrets Configuration**
+
+### **Required Secrets for GitHub Actions**
+
+The workflows require the following secrets to be configured:
+
+| Secret Name | Purpose | How to Get |
+|-------------|---------|------------|
+| `SNYK_TOKEN` | Snyk security scanning | [Snyk.io](https://snyk.io/) → Account Settings → API Tokens |
+| `SONAR_TOKEN` | SonarCloud analysis | [SonarCloud](https://sonarcloud.io/) → Account → Security |
+| `SONAR_HOST_URL` | SonarCloud host URL | Your SonarCloud instance URL (e.g., https://sonarcloud.io) |
+| `DOCKER_USERNAME` | Docker Hub publishing | Your Docker Hub username |
+| `DOCKER_PASSWORD` | Docker Hub publishing | [Docker Hub](https://hub.docker.com/) → Account Settings → Security (create access token) |
+
+### **For Organization Secrets** (Vivid-Vortex-DevOps)
+
+1. **Navigate to Organization Settings**
+   - Go to: [Vivid-Vortex-DevOps Organization Secrets](https://github.com/organizations/Vivid-Vortex-DevOps/settings/secrets/actions)
+   - Click on "Secrets and variables" → "Actions"
+
+2. **Add Required Secrets**
+   - Click "New repository secret" for each required secret
+   - Configure repository access (All repositories or specific ones)
+
+### **For Individual Repository Secrets**
+
+1. **Navigate to Repository Settings**
+   - Go to your repository → Settings → Secrets and variables → Actions
+   - URL pattern: `https://github.com/Vivid-Vortex-DevOps/[repo-name]/settings/secrets/actions`
+
+2. **Add the Same Secrets**
+   - Click "New repository secret" for each required secret
+
+### **Quick Setup Checklist**
+
+- [ ] **Organization Level**: Add secrets at [Vivid-Vortex-DevOps Organization Secrets](https://github.com/organizations/Vivid-Vortex-DevOps/settings/secrets/actions)
+- [ ] **Repository Level**: Add secrets in repository settings
+- [ ] **Snyk Token**: Generate at [Snyk.io](https://snyk.io/)
+- [ ] **SonarCloud Token**: Generate at [SonarCloud](https://sonarcloud.io/)
+- [ ] **Docker Hub Token**: Create access token at [Docker Hub](https://hub.docker.com/)
+
+### **Security Best Practices**
+
+- Use **access tokens** instead of passwords for Docker Hub
+- **Rotate tokens** regularly
+- **Limit repository access** to only necessary repositories
+- **Use organization secrets** for shared tokens across multiple repositories
+
+---
+
 Let me know if you want to **split this into multiple files**, add **report upload**, or generate **badges** for test coverage or quality gates!

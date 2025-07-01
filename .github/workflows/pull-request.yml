@@ -1,0 +1,17 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  # Call the common tasks workflow for PR checks
+  common-checks:
+    uses: ./.github/workflows/common-tasks.yml
+    with:
+      run-sonarcloud: true  # Run SonarCloud on PRs for quality gates
+      run-docker: false     # Don't build Docker on PRs
+      run-performance: false # Don't run performance tests on PRs
+      run-deploy: false     # Don't deploy on PRs
+      deploy-environment: ''
+    secrets: inherit 
