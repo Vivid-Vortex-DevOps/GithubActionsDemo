@@ -44,6 +44,7 @@ run-quality-checks.bat           # Windows
 - **Swagger UI**: `http://localhost:8080/swagger-ui.html` - API documentation
 
 ### 🔒 **Security Scanning**
+- **CodeQL**: Semantic code analysis for security vulnerabilities
 - **Trivy FS Scan**: File system vulnerability scanning
 - **Gitleaks**: Secret detection in git repositories
 - **Snyk**: Dependency vulnerability scanning
@@ -133,7 +134,7 @@ The project includes a comprehensive GitHub Actions workflow that automates all 
 
 ### 🚀 **Pipeline Stages**
 1. **Code Quality Checks** - Spotless, Checkstyle, PMD, SpotBugs
-2. **Security Scans** - Trivy FS scan, Gitleaks, Snyk, TruffleHog, OWASP dependency check
+2. **Security Scans** - CodeQL, Trivy FS scan, Gitleaks, Snyk, TruffleHog, OWASP dependency check
 3. **Testing** - Unit tests, integration tests, mutation testing, coverage
 4. **Performance Testing** - JMH benchmarks
 5. **Build & Deploy** - Application build, Docker image, deployment

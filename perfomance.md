@@ -37,6 +37,16 @@ Gitleaks is a specialized tool for detecting hardcoded secrets and sensitive inf
 - AWS/GCP/Azure credentials
 - GitHub tokens and other service tokens
 
+### **CodeQL Semantic Analysis**
+CodeQL is GitHub's semantic code analysis engine that finds security vulnerabilities and coding errors by understanding code context.
+
+**Capabilities:**
+- **Semantic analysis** - understands code context better than pattern matching
+- **Security vulnerabilities** - SQL injection, XSS, path traversal, etc.
+- **Coding errors** - null pointer dereferences, resource leaks, etc.
+- **Custom queries** - can write custom security rules
+- **Native GitHub integration** - results appear in Security tab
+
 **Installation:**
 ```bash
 curl -sSfL https://raw.githubusercontent.com/zricethezav/gitleaks/master/install.sh | sh -s -- -b /usr/local/bin v8.18.0
@@ -52,6 +62,23 @@ curl -sSfL https://raw.githubusercontent.com/zricethezav/gitleaks/master/install
 - name: Run Gitleaks Scan
   run: |
     gitleaks detect --source . --report-format json --report-path gitleaks-report.json --exit-code 0
+```
+
+**CodeQL Usage in GitHub Actions:**
+```yaml
+- name: Initialize CodeQL
+  uses: github/codeql-action/init@v3
+  with:
+    languages: java
+    queries: security-extended,security-and-quality
+    
+- name: Autobuild
+  uses: github/codeql-action/autobuild@v3
+  
+- name: Perform CodeQL Analysis
+  uses: github/codeql-action/analyze@v3
+  with:
+    category: "/language:java"
 ```
 
 ## 📊 **Performance Testing**
@@ -82,6 +109,7 @@ The project includes JMH (Java Microbenchmark Harness) benchmarks for performanc
 ### **Security Quality Gates**
 - **Trivy FS**: No HIGH or CRITICAL vulnerabilities
 - **Gitleaks**: No hardcoded secrets detected
+- **CodeQL**: No security vulnerabilities or coding errors
 - **Snyk**: No high-severity dependency vulnerabilities
 - **TruffleHog**: No secrets in recent commits
 
@@ -96,8 +124,9 @@ The project includes JMH (Java Microbenchmark Harness) benchmarks for performanc
 ### **Artifacts Generated**
 1. **trivy-fs-report.json**: Detailed vulnerability report
 2. **gitleaks-report.json**: Secret detection findings
-3. **benchmark-results/**: JMH performance metrics
-4. **quality-reports/**: All quality check results
+3. **CodeQL results**: Available in GitHub Security tab
+4. **benchmark-results/**: JMH performance metrics
+5. **quality-reports/**: All quality check results
 
 ### **Report Retention**
 - All reports are retained for 30 days

@@ -150,6 +150,21 @@ jobs:
         path: .
         base: HEAD~1
         head: HEAD
+        
+    # CodeQL Analysis - Semantic code scanning
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: java
+        queries: security-extended,security-and-quality
+        
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@v3
+      
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:java"
 
   # SonarCloud Analysis (Conditional)
   sonarqube:

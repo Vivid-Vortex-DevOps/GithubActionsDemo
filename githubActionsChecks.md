@@ -138,11 +138,37 @@ Specialized tool for detecting hardcoded secrets and sensitive information in gi
 
 ---
 
+#### 🔹 9. **CodeQL Semantic Analysis**
+
+GitHub's semantic code analysis engine that finds security vulnerabilities and coding errors by understanding code context.
+
+> **Usage:**
+
+```yaml
+- name: Initialize CodeQL
+  uses: github/codeql-action/init@v3
+  with:
+    languages: java
+    queries: security-extended,security-and-quality
+    
+- name: Autobuild
+  uses: github/codeql-action/autobuild@v3
+  
+- name: Perform CodeQL Analysis
+  uses: github/codeql-action/analyze@v3
+  with:
+    category: "/language:java"
+```
+
+🔗 [https://github.com/github/codeql-action](https://github.com/github/codeql-action)
+
+---
+
 ### 🔍 **Code Smells & Technical Debt**
 
 ---
 
-#### 🔹 9. **SonarCloud Scan**
+#### 🔹 10. **SonarCloud Scan**
 
 Run full code analysis on PRs and push results to the Sonar dashboard.
 
@@ -166,7 +192,7 @@ Run full code analysis on PRs and push results to the Sonar dashboard.
 
 ---
 
-#### 🔹 10. **Gradle Dependency Updates**
+#### 🔹 11. **Gradle Dependency Updates**
 
 Auto-checks for newer versions of dependencies.
 
@@ -183,7 +209,7 @@ Auto-checks for newer versions of dependencies.
 
 ---
 
-#### 🔹 11. **JMH Benchmarks (if you write performance tests)**
+#### 🔹 12. **JMH Benchmarks (if you write performance tests)**
 
 Run JMH benchmarks and compare results in PRs (can be custom setup).
 
@@ -195,7 +221,7 @@ Run JMH benchmarks and compare results in PRs (can be custom setup).
 
 ---
 
-#### 🔹 12. **Test with JaCoCo + Gradle**
+#### 🔹 13. **Test with JaCoCo + Gradle**
 
 Run all unit tests and generate coverage report.
 
