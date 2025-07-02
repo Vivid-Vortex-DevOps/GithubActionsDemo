@@ -1,0 +1,47 @@
+# Trivy Ignore File
+# Add patterns to ignore specific files/directories from Trivy FS scan
+
+# Build artifacts and dependencies
+node_modules/
+build/
+.gradle/
+bin/
+out/
+
+# Log files
+*.log
+logs/
+
+# Test files (may contain mock data)
+test/
+src/test/
+
+# Documentation (may contain examples)
+docs/
+*.md
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Large binary files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# Configuration files with sensitive examples
+application-example.properties
+application-dev.properties 

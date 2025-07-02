@@ -19,6 +19,7 @@ This project implements a comprehensive set of code quality and testing tools. F
 ### 📋 **Detailed Documentation**
 - **[Code Quality Tools Guide](checks.md)** - Complete list of all implemented tools with descriptions and configurations
 - **[GitHub Actions Implementation](githubActionsChecks.md)** - CI/CD pipeline setup and GitHub Actions workflows
+- **[Performance & Security Analysis](perfomance.md)** - Security scanning tools (Trivy, Gitleaks) and performance testing
 
 ### 🚀 **Quick Start Commands**
 
@@ -41,6 +42,12 @@ run-quality-checks.bat           # Windows
 ### 🔗 **External Tools**
 - **[SonarCloud Dashboard](https://sonarcloud.io/summary/overall?id=Vivid-Vortex-DevOps_GithubActionsDemo&branch=master)** - Cloud-based code quality analysis
 - **Swagger UI**: `http://localhost:8080/swagger-ui.html` - API documentation
+
+### 🔒 **Security Scanning**
+- **Trivy FS Scan**: File system vulnerability scanning
+- **Gitleaks**: Secret detection in git repositories
+- **Snyk**: Dependency vulnerability scanning
+- **TruffleHog**: Additional secret detection
 
 ## 🏗️ Project Structure
 
@@ -126,9 +133,10 @@ The project includes a comprehensive GitHub Actions workflow that automates all 
 
 ### 🚀 **Pipeline Stages**
 1. **Code Quality Checks** - Spotless, Checkstyle, PMD, SpotBugs
-2. **Security Scans** - OWASP dependency check, secrets detection
+2. **Security Scans** - Trivy FS scan, Gitleaks, Snyk, TruffleHog, OWASP dependency check
 3. **Testing** - Unit tests, integration tests, mutation testing, coverage
-4. **Build & Deploy** - Application build, Docker image, deployment
+4. **Performance Testing** - JMH benchmarks
+5. **Build & Deploy** - Application build, Docker image, deployment
 
 ## 📊 API Endpoints
 

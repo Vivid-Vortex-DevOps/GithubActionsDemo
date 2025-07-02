@@ -95,6 +95,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Required for Gitleaks to scan git history
       
     # Snyk for Open Source Scanning
     - name: Snyk Scan
@@ -104,8 +106,45 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         
-    # Check for secrets with TruffleHog
-    - name: Check for secrets
+    # Trivy FS Scan - Install and run Trivy
+    - name: Install Trivy
+      run: |
+        curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.48.0
+        trivy --version
+        
+    - name: Run Trivy FS Scan
+      run: |
+        trivy fs --format json --output trivy-fs-report.json .
+        trivy fs --severity HIGH,CRITICAL --exit-code 1 .
+        
+    - name: Upload Trivy FS Report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: trivy-fs-report
+        path: trivy-fs-report.json
+        retention-days: 30
+        
+    # Gitleaks - Install and run Gitleaks
+    - name: Install Gitleaks
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/zricethezav/gitleaks/master/install.sh | sh -s -- -b /usr/local/bin v8.18.0
+        gitleaks version
+        
+    - name: Run Gitleaks Scan
+      run: |
+        gitleaks detect --source . --report-format json --report-path gitleaks-report.json --exit-code 0
+        
+    - name: Upload Gitleaks Report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: gitleaks-report
+        path: gitleaks-report.json
+        retention-days: 30
+        
+    # Check for secrets with TruffleHog (keeping existing)
+    - name: Check for secrets with TruffleHog
       uses: trufflesecurity/trufflehog@main
       with:
         path: .

@@ -95,11 +95,54 @@ Detects vulnerabilities and license issues in your dependencies.
 
 ---
 
+#### 🔹 7. **Trivy FS Scan**
+
+Comprehensive security scanner for file systems that detects vulnerabilities in OS packages, dependencies, IaC files, and secret leaks.
+
+> **Installation & Usage:**
+
+```yaml
+- name: Install Trivy
+  run: |
+    curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.48.0
+    trivy --version
+    
+- name: Run Trivy FS Scan
+  run: |
+    trivy fs --format json --output trivy-fs-report.json .
+    trivy fs --severity HIGH,CRITICAL --exit-code 1 .
+```
+
+🔗 [https://github.com/aquasecurity/trivy](https://github.com/aquasecurity/trivy)
+
+---
+
+#### 🔹 8. **Gitleaks Secret Detection**
+
+Specialized tool for detecting hardcoded secrets and sensitive information in git repositories.
+
+> **Installation & Usage:**
+
+```yaml
+- name: Install Gitleaks
+  run: |
+    curl -sSfL https://raw.githubusercontent.com/zricethezav/gitleaks/master/install.sh | sh -s -- -b /usr/local/bin v8.18.0
+    gitleaks version
+    
+- name: Run Gitleaks Scan
+  run: |
+    gitleaks detect --source . --report-format json --report-path gitleaks-report.json --exit-code 0
+```
+
+🔗 [https://github.com/zricethezav/gitleaks](https://github.com/zricethezav/gitleaks)
+
+---
+
 ### 🔍 **Code Smells & Technical Debt**
 
 ---
 
-#### 🔹 7. **SonarCloud Scan**
+#### 🔹 9. **SonarCloud Scan**
 
 Run full code analysis on PRs and push results to the Sonar dashboard.
 
@@ -123,7 +166,7 @@ Run full code analysis on PRs and push results to the Sonar dashboard.
 
 ---
 
-#### 🔹 8. **Gradle Dependency Updates**
+#### 🔹 10. **Gradle Dependency Updates**
 
 Auto-checks for newer versions of dependencies.
 
@@ -140,7 +183,7 @@ Auto-checks for newer versions of dependencies.
 
 ---
 
-#### 🔹 9. **JMH Benchmarks (if you write performance tests)**
+#### 🔹 11. **JMH Benchmarks (if you write performance tests)**
 
 Run JMH benchmarks and compare results in PRs (can be custom setup).
 
@@ -152,7 +195,7 @@ Run JMH benchmarks and compare results in PRs (can be custom setup).
 
 ---
 
-#### 🔹 10. **Test with JaCoCo + Gradle**
+#### 🔹 12. **Test with JaCoCo + Gradle**
 
 Run all unit tests and generate coverage report.
 

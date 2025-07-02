@@ -1,0 +1,43 @@
+# Gitleaks Configuration
+# This file configures Gitleaks to ignore false positives and customize scanning behavior
+
+[allowlist]
+description = "Allowlist for false positives and test data"
+
+# Ignore specific files or directories
+[[allowlist.paths]]
+path = "test/"
+reason = "Test files may contain mock credentials"
+
+[[allowlist.paths]]
+path = "docs/"
+reason = "Documentation may contain example credentials"
+
+[[allowlist.paths]]
+path = "*.md"
+reason = "Markdown files may contain example code"
+
+# Ignore specific regex patterns (false positives)
+[[allowlist.regexes]]
+regex = '''AKIA[0-9A-Z]{16}'''
+reason = "AWS Access Key ID (false positive in examples)"
+
+[[allowlist.regexes]]
+regex = '''[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}'''
+reason = "UUID patterns (false positive)"
+
+[[allowlist.regexes]]
+regex = '''password.*=.*['"][^'"]{8,}['"]'''
+reason = "Password in configuration examples"
+
+# Ignore specific commits
+[[allowlist.commits]]
+commit = "commit-hash-here"
+reason = "Specific commit to ignore"
+
+# Custom rules (optional)
+[[rules]]
+id = "custom-rule"
+description = "Custom rule for project-specific patterns"
+regex = '''custom-pattern'''
+tags = ["custom", "project-specific"] 
